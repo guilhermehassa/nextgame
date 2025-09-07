@@ -1,0 +1,123 @@
+@use '../../styles/variables' as variables;
+
+.loadingScreen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: white;
+  padding: 1rem;
+  animation: fadeIn 0.5s ease-in;
+
+  
+  &__content {
+    width: 100%;
+    max-width: 600px;
+    min-height: 300px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 4rem;
+  }
+
+  &__iconWrapper {
+    margin-bottom: 2rem;
+    &___icon {
+      font-size: 4rem;
+      color: variables.$primary-dark;
+      animation: messageFade 3.7s infinite;
+    }
+  }
+
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    background: linear-gradient(
+      90deg,
+      variables.$primary,
+      variables.$primary-dark
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: messageFade 3.7s infinite;
+  }
+  
+  &__subtitle {
+    font-size: 1.1rem;
+    color: variables.$secondary-dark;
+    margin-bottom: 2rem;
+    animation: messageFade 3.7s infinite;
+  }
+  
+  &__progressContainer {
+    width: min(85%, 300px);
+    height: 6px;
+    background: #fff;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+  }
+  
+  &__progressBar {
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      variables.$primary,
+      variables.$primary-dark
+    );
+    transition: width 0.1s ease-out;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes messageFade {
+  0%, 5% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  15%, 70% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  85%, 100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

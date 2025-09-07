@@ -1,0 +1,207 @@
+@use '../../styles/variables.scss' as variables;
+.searchForm {
+  legend {
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: -1px;
+    width: fit-content;
+    color: variables.$secondary;
+    border: 1px solid #9c9c9c;
+    background-color: #ebebeb;
+    position: relative;
+    z-index: 1;
+    border-bottom: none;
+  }
+
+  fieldset {
+    border: 1px solid #9c9c9c;
+  }
+
+  &__actionButtons {
+    display: flex;
+    justify-content: space-between;
+    order: 2;
+    
+    @media (min-width: 1024px) {
+      position: absolute;
+      top: -30px;
+      right: 0;
+      z-index: 1;
+    }
+  }
+  
+  &__actionButton {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 0;
+    font-weight: 500;
+    transition: all 0.2s;
+    width: 50%;
+
+    @media screen and (min-width: 1024px) {
+      width: auto;
+      height: 30px;
+    }
+    
+    &--primary {
+      background-color: variables.$secondary;
+      color: white;
+      border: none;
+      
+      &:hover, &:focus {
+        background-color: variables.$secondary;
+        border-color: variables.$secondary;
+      }
+    }
+    
+    &--secondary {
+      background-color: transparent;
+      color: variables.$secondary;
+      border: 1px solid variables.$secondary;
+      
+      &:hover, &:focus {
+        background-color: #f8f9fa;
+        color: variables.$secondary-dark;
+        border: 1px solid variables.$secondary-dark;
+      }
+    }
+  }
+
+  &__fieldsetContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__checkboxGrid {
+    height: 12rem;
+    overflow-y: scroll;
+    position: relative;
+    padding-right: 0;
+
+    @media screen and (min-width: 1024px) {
+      height: 16rem;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #dbdbdb;
+
+      &-thumb {
+        background-color: variables.$secondary;
+        border-radius: 0;
+      }
+    }
+
+    > div {
+      &:last-child {
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  &__checkboxContainer {
+    position: relative;
+  }
+
+  &__checkmark {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    padding: 0 16px;
+    border: 2px solid #dbdbdb;
+    font-weight: 500;
+    transition: 0.2s ease;
+    user-select: none;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  
+    &:hover {
+      border-color: variables.$primary;
+    }
+  
+    &:after {
+      content: '';
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      background-color: #ffffff;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  }
+  
+  &__checkbox {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    cursor: pointer;
+    transition: 0.2s ease;
+    
+  }
+
+  &__checkbox:checked + &__checkmark {
+    background-color: variables.$primary;
+    border-color: variables.$primary;
+    color: white;
+    
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  &__inputGroup{
+    border: 2px solid #9c9c9c;
+    border-radius: 0;
+    transition: border-color 0.2s;
+
+
+    input {
+      border: none;
+      box-shadow: none;
+      outline: none;
+      height: 37px;
+      border-radius: 0;
+      &:focus {
+        box-shadow: none;
+        border: none;
+      }
+    }
+    span{
+      border-radius: 0;
+      background-color: #9c9c9c;
+      border:none;
+      color: variables.$secondary-dark;
+    }
+  }
+
+  .submitButton {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1rem;
+    background-color: variables.$primary;
+    color: white;
+    border: none;
+    font-weight: 700;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: variables.$primary;
+    }
+
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  }
+  
+}
+

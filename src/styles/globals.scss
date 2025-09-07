@@ -1,0 +1,39 @@
+@use './variables.scss' as variables;
+
+html,
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #ebebeb;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.btn-primary {
+  background-color: variables.$primary;
+  &:hover, &:focus {
+    background-color: variables.$primary-dark;
+    border-color: variables.$primary-dark;
+  }
+}
+
+.btn-secondary {
+  background-color: variables.$secondary-dark;
+  &:hover, &:focus {
+    background-color: variables.$secondary;
+    border-color: variables.$secondary;
+  }
+}
