@@ -9,7 +9,6 @@
   max-width: 1300px;
   height: auto;
   margin: 0 auto;
-  margin-bottom: 2rem;
   display: block;
 }
 
@@ -40,7 +39,7 @@
   border-radius: 0;
   text-align: center;
   transition: all 0.3s ease;
-  position: fixed;
+  z-index: 10;
   bottom: 20px;
   left: 20px;
   width: calc(100% - 40px);
@@ -54,6 +53,24 @@
 
   &:hover{
     background-color: variables.$primary-dark;
+  }
+
+  &_secondary{
+    position: relative;
+    z-index: 1;
+    animation: none;
+    background-color: transparent;
+    border: 1px solid variables.$secondary;
+    color: variables.$secondary;
+  }
+  
+  &_tertiary{
+    position: relative;
+    z-index: 1;
+    animation: none;
+    background-color: transparent;
+    border: 1px solid variables.$primary;
+    color: variables.$primary;
   }
 
 }

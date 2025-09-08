@@ -1,6 +1,7 @@
 'use client';
 import { GameResult, useAppContext } from '@/context/Context';
 import { useState } from 'react';
+import { useGameSearch } from '@/hooks/useGameSearch';
 import styles from './styles.module.scss';
 
 const genres = [
@@ -52,8 +53,8 @@ const genres = [
 ];
 
 const platforms = [
-  'PC (Windows)',
-  'Browser',
+  { label: 'Computador', value: 'pc' },
+  { label: 'Navegador', value: 'browser' }
 ];
 
 interface SearchFormProps {
@@ -61,12 +62,15 @@ interface SearchFormProps {
     label: string;
     value: string
   }[];
-  platforms: string[];
+  platforms: {
+    label?: string;
+    value: string;
+  }[];
   ramSize: string;
 }
 
 export default function SearchForm() {
-  const { setLoading, setResult, loading } = useAppContext(); 
+  const { setLoading, setResult, setLastSearch } = useAppContext(); 
   const [formData, setFormData] = useState<SearchFormProps>({
     genres: [],
     platforms: [],
@@ -83,7 +87,7 @@ export default function SearchForm() {
     setErrorMessage(null);
   };
 
-  const handlePlatformChange = (platform: string) => {
+  const handlePlatformChange = (platform: {label: string; value: string}) => {
     const updatedPlatforms = formData.platforms.includes(platform)
       ? formData.platforms.filter(p => p !== platform)
       : [...formData.platforms, platform];
@@ -112,6 +116,8 @@ export default function SearchForm() {
     setErrorMessage(null);
   };
 
+  const { searchGame, isLoading } = useGameSearch();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
@@ -132,60 +138,23 @@ export default function SearchForm() {
     
     setErrorMessage(null);
     setLoading('loading');
-    console.log(formData);
 
-    const apiCall = new Promise((resolve) => {
-      setTimeout(() => {
-        const mockResults = {
-        "id": 581,
-        "title": "XDefiant",
-        "thumbnail": "https://www.freetogame.com/g/581/thumbnail.jpg",
-        "status": "Offline",
-        "short_description": "A free-to-play first-person arena shooter from Ubisoft.",
-        "description": "XDefiant is a free-to-play, first-person arena shooter from Ubisoft. Players choose between five different factions from Ubisoft’s other games to play as. Each faction has its own set of skills: an ultra, a passive trait, and two abilities. Each is unique to the faction in question, So players will want to pay attention when building out their teams.\r\n\r\nPlayers can further customize their character to fit their playstyle using a wide selection of weapons with more than 40 attachments.\r\n\r\nThe game features two main map types: arena and progression. Under each of these is a wider selection of modes. Arena features ten different maps designed with Domination, Occupy, and Hot Shot modes in mind. Progression (or linear) features four maps designed around Escort and Zone Control modes.",
-        "game_url": "https://www.freetogame.com/open/xdefiant",
-        "genre": "Shooter",
-        "platform": "Windows",
-        "publisher": "Ubisoft",
-        "developer": "Ubisoft",
-        "release_date": "2024-05-21",
-        "freetogame_profile_url": "https://www.freetogame.com/xdefiant",
-        "minimum_system_requirements": {
-          "os": "Windows 10",
-          "processor": "Intel i3-10105F / AMD Ryzen 3 3100",
-          "memory": "8 GB",
-          "graphics": "Intel ARC A380 / Nvidia GTS 1050Ti / AMD RX 5500 XT",
-          "storage": "35 GB"
-        },
-        "screenshots": [
-          {
-            "id": 1445,
-            "image": "https://www.freetogame.com/g/581/xdefiant-1.jpg"
-          },
-          {
-            "id": 1446,
-            "image": "https://www.freetogame.com/g/581/xdefiant-2.jpg"
-          },
-          {
-            "id": 1447,
-            "image": "https://www.freetogame.com/g/581/xdefiant-3.jpg"
-          }
-        ]
-      };
-      
-        resolve(mockResults);
-      }, 1000); // Simula uma API rápida
-    });
-
+    const searchParams = {
+      genres: formData.genres.map(g => g.value),
+      platforms: formData.platforms.map(p => p.value),
+      ramSize: formData.ramSize
+    };
     
-    const [result] = await Promise.all([
-      apiCall,
-      new Promise(resolve => setTimeout(resolve, 10000)) 
-    ]);
+    setLastSearch(searchParams);
+    const { error, game } = await searchGame(searchParams);
 
-    // Atualiza o estado com o resultado
-    setResult(result as GameResult);
-    setLoading('finished');
+    if (error) {
+      setErrorMessage(error);
+    } else if (game) {
+      setResult(game);
+      setLoading('finished');
+    }
+
   };
 
   return (
@@ -255,17 +224,17 @@ export default function SearchForm() {
             <fieldset className="p-3 p-md-4">
               <div className="d-flex flex-wrap gap-3">
                 {platforms.map((platform) => (
-                  <div key={platform} className="flex-grow-1" style={{ maxWidth: '180px' }}>
+                  <div key={platform.value} className="flex-grow-1" style={{ maxWidth: '180px' }}>
                     <div className={styles.searchForm__checkboxContainer}>
                       <input
                         type="checkbox"
                         className={styles.searchForm__checkbox}
-                        id={`platform-${platform}`}
+                        id={`platform-${platform.value}`}
                         checked={formData.platforms.includes(platform)}
                         onChange={() => handlePlatformChange(platform)}
                       />
-                      <label className={styles.searchForm__checkmark} htmlFor={`platform-${platform}`}>
-                        {platform}
+                      <label className={styles.searchForm__checkmark} htmlFor={`platform-${platform.value}`}>
+                        {platform.label}
                       </label>
                     </div>
                   </div>

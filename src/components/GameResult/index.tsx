@@ -1,27 +1,71 @@
-import { GameResult as GameResultType } from '@/context/Context';
+'use client'
+import { GameResult as GameResultType, useAppContext } from '@/context/Context';
 import styles from './styles.module.scss';
+import { useGameSearch } from '@/hooks/useGameSearch';
 
 export default function GameResult({ game }: { game: GameResultType }) {
   if (!game) return null;
+  const { setLoading, setResult, lastSearch } = useAppContext(); 
+  
+  const { searchGame } = useGameSearch();
+
+  const handleBack = () => {
+    setLoading('none');
+  }
+
+  const handleNewSearch = async () => {
+    if (!lastSearch) {
+      console.error('Parâmetros da última busca não encontrados');
+      setLoading('none');
+      return;
+    }
+
+    setLoading('loading');
+    
+    const { error, game: newGame } = await searchGame(lastSearch);
+
+    if (error) {
+      console.error(error);
+      setLoading('none');
+    } else if (newGame) {
+      setResult(newGame);
+      setLoading('finished');
+    }
+  }
 
   return (
     <div className={`container-fluid p-0 py-lg-5 ${styles.gameResult}`}>
-      <div className="w-100 fluid">
+      <div className="w-100 fluid mb-3">
         <img src={game.thumbnail} alt={game.title} className={`d-lg-none ${styles.thumbnail}`} />
+        <a 
+          href={game.game_url} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className={`btn ${styles.actionButton} text-white w-100 d-lg-none`}
+        >
+          Comprar e Jogar
+        </a>
+        <button
+          className={`btn p-2 w-100 d-lg-none border-dark border-black rounded-0`}
+          onClick={handleNewSearch}
+        >
+          Encontrar outro Jogo
+        </button>
       </div>
       <div className="container">
         <div className="row">
           <div className="col-lg-4 order-lg-1 order-2">
             <img src={game.thumbnail} alt={game.title} className={`d-none d-lg-block ${styles.thumbnail}`} />
-            <a 
-              href={game.game_url} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={`btn ${styles.actionButton} text-white`}
-            >
-              Comprar e Jogar
-            </a>
+            
             <div className="mb-4">
+              <a 
+                href={game.game_url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className={`btn ${styles.actionButton} text-white w-100 d-none d-lg-block`}
+              >
+                Comprar e Jogar
+              </a>
               <h3 className={styles.sectionTitle}>Informações Gerais</h3>
               <ul className="list-unstyled">
                 <li className="mb-2"><strong>Gênero:</strong> {game.genre}</li>
@@ -45,6 +89,20 @@ export default function GameResult({ game }: { game: GameResultType }) {
                 </ul>
               </div>
             )}
+
+            <button
+              className={`btn ${styles.actionButton} ${styles.actionButton_tertiary} mb-3 d-none d-lg-block`}
+              onClick={handleNewSearch}
+              >
+              Encontrar outro Jogo
+            </button>
+            <button
+              className={`btn ${styles.actionButton} ${styles.actionButton_secondary} mt-2`}
+              onClick={handleBack}
+              >
+              Voltar ao Formulário
+            </button>
+
           </div>
 
           <div className="col-lg-8 order-lg-2 order-1">

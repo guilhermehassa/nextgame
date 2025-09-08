@@ -30,11 +30,19 @@ export type GameResult = {
   }>;
 } | null; 
 
+export type LastSearchParams = {
+  genres: string[];
+  platforms: string[];
+  ramSize: string;
+};
+
 type AppContextType = {
   loading: LoadingState; 
   setLoading: (value: LoadingState) => void;
   result: GameResult;
   setResult: (value: GameResult) => void;
+  lastSearch: LastSearchParams | null;
+  setLastSearch: (value: LastSearchParams | null) => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -42,9 +50,17 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function Provider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState<LoadingState>('none');
   const [result, setResult] = useState<GameResult>(null); 
+  const [lastSearch, setLastSearch] = useState<LastSearchParams | null>(null);
 
   return (
-    <AppContext.Provider value={{ loading, setLoading, result, setResult }}>
+    <AppContext.Provider value={{ 
+      loading, 
+      setLoading, 
+      result, 
+      setResult, 
+      lastSearch, 
+      setLastSearch 
+    }}>
       {children}
     </AppContext.Provider>
   );
