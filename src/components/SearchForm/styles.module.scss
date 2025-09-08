@@ -7,24 +7,15 @@
     color: variables.$secondary;
   }
 
-  fieldset {
-    // border: 1px solid #9c9c9c;
-    // border-right: none;
-    // border-top: none;
-    // background-color: #fff;
-  }
-
   &__actionButtons {
     display: flex;
     justify-content: space-between;
     order: 2;
     
     @media (min-width: 1024px) {
-      // position: absolute;
       justify-content: flex-end;
       top: 0;
       right: 0;
-      // z-index: 1;
     }
   }
   
