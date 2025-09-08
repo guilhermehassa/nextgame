@@ -43,6 +43,8 @@ type AppContextType = {
   setResult: (value: GameResult) => void;
   lastSearch: LastSearchParams | null;
   setLastSearch: (value: LastSearchParams | null) => void;
+  lastError: string | null;
+  setLastError: (value: string | null) => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -51,6 +53,7 @@ export function Provider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState<LoadingState>('none');
   const [result, setResult] = useState<GameResult>(null); 
   const [lastSearch, setLastSearch] = useState<LastSearchParams | null>(null);
+  const [lastError, setLastError] = useState<string | null>(null);
 
   return (
     <AppContext.Provider value={{ 
@@ -59,7 +62,9 @@ export function Provider({ children }: { children: ReactNode }) {
       result, 
       setResult, 
       lastSearch, 
-      setLastSearch 
+      setLastSearch,
+      lastError,
+      setLastError
     }}>
       {children}
     </AppContext.Provider>

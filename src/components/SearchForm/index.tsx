@@ -70,13 +70,12 @@ interface SearchFormProps {
 }
 
 export default function SearchForm() {
-  const { setLoading, setResult, setLastSearch } = useAppContext(); 
+  const { setLoading, setResult, setLastSearch, lastSearch, lastError, setLastError } = useAppContext(); 
   const [formData, setFormData] = useState<SearchFormProps>({
-    genres: [],
-    platforms: [],
-    ramSize: '',
+    genres: lastSearch ? genres.filter(g => lastSearch.genres.includes(g.value)) : [],
+    platforms: lastSearch ? platforms.filter(p => lastSearch.platforms.includes(p.value)) : [],
+    ramSize: lastSearch?.ramSize || '',
   });
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleGenreChange = (genre: { label: string; value: string }) => {
     const updatedGenres = formData.genres.some(g => g.value === genre.value)
@@ -84,7 +83,7 @@ export default function SearchForm() {
       : [...formData.genres, genre];
 
     setFormData({ ...formData, genres: updatedGenres });
-    setErrorMessage(null);
+    setLastError(null);
   };
 
   const handlePlatformChange = (platform: {label: string; value: string}) => {
@@ -93,17 +92,17 @@ export default function SearchForm() {
       : [...formData.platforms, platform];
     
     setFormData({ ...formData, platforms: updatedPlatforms });
-    setErrorMessage(null);
+    setLastError(null);
   };
   
   const handleSelectAllGenres = () => {
     setFormData({ ...formData, genres: [...genres] });
-    setErrorMessage(null);
+    setLastError(null);
   };
   
   const handleDeselectAllGenres = () => {
     setFormData({ ...formData, genres: [] });
-    setErrorMessage(null);
+    setLastError(null);
   };
   const { searchGame, isLoading } = useGameSearch();
 
@@ -111,21 +110,21 @@ export default function SearchForm() {
     e.preventDefault();
     
     if (formData.genres.length === 0) {
-      setErrorMessage('Selecione pelo menos um gênero para continuar.');
+      setLastError('Selecione pelo menos um gênero para continuar.');
       return;
     }
     
     if (formData.platforms.length === 0) {
-      setErrorMessage('Selecione pelo menos uma plataforma de preferência.');
+      setLastError('Selecione pelo menos uma plataforma de preferência.');
       return;
     }
     
     if (!formData.ramSize || formData.ramSize === '0') {
-      setErrorMessage('Informe a quantidade de memória RAM disponível em sua máquina.');
+      setLastError('Informe a quantidade de memória RAM disponível em sua máquina.');
       return;
     }
     
-    setErrorMessage(null);
+    setLastError(null);
     setLoading('loading');
 
     const searchParams = {
@@ -138,10 +137,14 @@ export default function SearchForm() {
     const { error, game } = await searchGame(searchParams);
 
     if (error) {
-      setErrorMessage(error);
+      setLastError(error);
+      setResult(null); 
+      setLoading('none'); 
+      
     } else if (game) {
       setResult(game);
       setLoading('finished');
+      setLastError(null); 
     }
 
   };
@@ -231,7 +234,7 @@ export default function SearchForm() {
                   value={formData.ramSize}
                   onChange={(e) => {
                     setFormData({ ...formData, ramSize: e.target.value });
-                    setErrorMessage(null);
+                    setLastError(null);
                   }}
                 />
                 <span className="input-group-text">GB</span>
@@ -251,9 +254,9 @@ export default function SearchForm() {
             PESQUISAR
           </button>
           
-          {errorMessage && (
+          {lastError && (
             <div className="alert alert-danger mt-3 rounded-0" role="alert">
-              {errorMessage}
+              {lastError}
             </div>
           )}
         </div>

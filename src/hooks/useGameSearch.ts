@@ -35,14 +35,20 @@ export function useGameSearch(): UseGameSearchReturn {
 
       const gamesList = await requestGamesList.json();
 
-      if (gamesList?.status === 0) {
+      if (!Array.isArray(gamesList) || gamesList.length === 0) {
         return { error: 'Não encontramos nenhum jogo entre esse(s) gênero(s) e plataforma(s).' };
       }
 
       let validGame = false;
+      let attempts = 0;
       let gameData;
 
-      while (!validGame) {
+      while (!validGame ) {
+        attempts++;
+        console.log('attempt', attempts);
+        if (attempts > 10) {
+          return { error: 'Não encontramos nenhum jogo que atenda as especificações selecionadas, tente novamente' };
+        }
         const randomGame = gamesList[Math.floor(Math.random() * gamesList.length)];
         const gameRequest = await fetch(`/api/game?id=${randomGame.id.toString()}`);
 
@@ -58,12 +64,10 @@ export function useGameSearch(): UseGameSearchReturn {
           let minimunMemoryUnity = gameData.minimum_system_requirements.memory.split(' ')[1];
 
           if (minimunMemoryUnity != 'MB' || minimunMemoryUnity != 'mb') {
-            validGame = true;
-          } else {
             if (parseInt(params.ramSize) >= parseInt(minimunMemory)) {
               validGame = true;
             }
-          }
+          } 
         }
       }
 
