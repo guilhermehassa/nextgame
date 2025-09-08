@@ -3,18 +3,15 @@
   legend {
     font-weight: 500;
     margin: 0;
-    margin-bottom: -1px;
     width: fit-content;
     color: variables.$secondary;
-    border: 1px solid #9c9c9c;
-    background-color: #ebebeb;
-    position: relative;
-    z-index: 1;
-    border-bottom: none;
   }
 
   fieldset {
-    border: 1px solid #9c9c9c;
+    // border: 1px solid #9c9c9c;
+    // border-right: none;
+    // border-top: none;
+    // background-color: #fff;
   }
 
   &__actionButtons {
@@ -23,10 +20,11 @@
     order: 2;
     
     @media (min-width: 1024px) {
-      position: absolute;
-      top: -30px;
+      // position: absolute;
+      justify-content: flex-end;
+      top: 0;
       right: 0;
-      z-index: 1;
+      // z-index: 1;
     }
   }
   
@@ -80,7 +78,7 @@
     padding-right: 0;
 
     @media screen and (min-width: 1024px) {
-      height: 16rem;
+      height: 24rem;
     }
 
     &::-webkit-scrollbar {
@@ -111,7 +109,7 @@
     justify-content: center;
     height: 2.5rem;
     padding: 0 16px;
-    border: 2px solid #dbdbdb;
+    background-color: #dbdbdb;
     font-weight: 500;
     transition: 0.2s ease;
     user-select: none;
@@ -120,7 +118,7 @@
     cursor: pointer;
   
     &:hover {
-      border-color: variables.$primary;
+      border: 1px solid variables.$primary;
     }
   
     &:after {

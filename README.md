@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NextGame - Seu Guia de Recomendação de Jogos
 
-## Getting Started
+## 📖 Sobre o Projeto
 
-First, run the development server:
+NextGame é uma aplicação web moderna desenvolvida com Next.js que ajuda usuários a descobrirem novos jogos com base em suas preferências e especificações de hardware. A aplicação utiliza a API FreeToGame para fornecer recomendações personalizadas de jogos.
 
+## 🚀 Funcionalidades Principais
+
+### 1. Busca Personalizada
+- **Seleção de Gêneros**: Mais de 30 gêneros disponíveis, incluindo:
+  - MMORPG, Tiro, Estratégia, MOBA
+  - Corrida, Esportes, Social, Sandbox
+  - Mundo Aberto, Sobrevivência, PvP, PvE
+  - E muito mais...
+- **Plataformas**: Suporte para jogos em:
+  - Computador (PC)
+  - Navegador (Browser)
+- **Verificação de Hardware**: Filtragem por memória RAM disponível para garantir compatibilidade
+
+### 2. Interface Intuitiva
+- Design responsivo para todas as telas
+- Formulário de busca com opções de:
+  - Seleção/Deseleção em massa de gêneros
+  - Seleção/Deseleção em massa de plataformas
+  - Validação de campos obrigatórios
+
+### 3. Tela de Carregamento
+- Animações suaves e profissionais
+- Mensagens dinâmicas durante a busca
+- Indicador de progresso visual
+
+### 4. Exibição de Resultados
+- **Informações Detalhadas**:
+  - Título e descrição completa
+  - Thumbnails e screenshots em alta qualidade
+  - Visualização em tela cheia das screenshots
+  - Gênero e plataforma
+  - Desenvolvedor e publicador
+  - Data de lançamento e status
+- **Requisitos do Sistema**:
+  - Sistema operacional
+  - Processador
+  - Memória RAM
+  - Placa de vídeo
+  - Armazenamento necessário
+- **Ações Disponíveis**:
+  - Link direto para jogar/comprar
+  - Opção de buscar outro jogo
+  - Voltar ao formulário de busca
+
+## 🛠 Tecnologias Utilizadas
+
+- **Framework**: Next.js 14
+- **Estilização**: 
+  - SASS/SCSS
+  - Bootstrap 5
+  - CSS Modules
+- **Linguagens**:
+  - TypeScript
+  - JavaScript
+- **Componentes**:
+  - React Icons
+  - Context API para gerenciamento de estado
+
+## 🚀 Como Executar
+
+1. Clone o repositório
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [url-do-repositorio]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Instale as dependências
+```bash
+npm install
+# ou
+yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Execute o servidor de desenvolvimento
+```bash
+npm run dev
+# ou
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Acesse `http://localhost:3000`
 
-## Learn More
+## 📱 Layout Responsivo
 
-To learn more about Next.js, take a look at the following resources:
+- **Desktop**: Layout otimizado com sidebar e conteúdo principal
+- **Mobile**: Design adaptativo com navegação simplificada
+- **Tablets**: Interface híbrida para melhor usabilidade
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👨‍💻 Autor
 
-## Deploy on Vercel
+Guilherme Hassã
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---

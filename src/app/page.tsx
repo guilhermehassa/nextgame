@@ -10,7 +10,7 @@ export default function Home() {
     <main>
       {loading === 'none' && (
         <div className="container mt-3 mt-lg-4">
-          <h1 className="text-center fs-2 mb-3 fst-italic">
+          <h1 className="text-center fs-2 mb-4 fst-italic">
             encontre seu&nbsp;
             <span className="text-primary">
               próximo jogo 

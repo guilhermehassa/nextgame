@@ -5,51 +5,51 @@ import { useGameSearch } from '@/hooks/useGameSearch';
 import styles from './styles.module.scss';
 
 const genres = [
-  { label: "MMORPG", value: "mmorpg" },
-  { label: "Tiro", value: "shooter" },
-  { label: "Estratégia", value: "strategy" },
-  { label: "MOBA", value: "moba" },
-  { label: "Corrida", value: "racing" },
-  { label: "Esportes", value: "sports" },
-  { label: "Social", value: "social" },
-  { label: "Sandbox", value: "sandbox" },
-  { label: "Mundo Aberto", value: "open-world" },
-  { label: "Sobrevivência", value: "survival" },
-  { label: "PvP", value: "pvp" },
-  { label: "PvE", value: "pve" },
-  { label: "Pixel", value: "pixel" },
-  { label: "Voxel", value: "voxel" },
-  { label: "Zumbi", value: "zombie" },
-  { label: "Turnos", value: "turn-based" },
-  { label: "Primeira Pessoa", value: "first-person" },
-  { label: "Terceira Pessoa", value: "third-person" },
-  { label: "Topo", value: "top-down" },
-  { label: "Tanque", value: "tank" },
-  { label: "Espaço", value: "space" },
-  { label: "Náutico", value: "sailing" },
-  { label: "Side Scroller", value: "side-scroller" },
-  { label: "Super-herói", value: "superhero" },
-  { label: "Permadeath", value: "permadeath" },
-  { label: "Cartas", value: "card" },
-  { label: "Battle Royale", value: "battle-royale" },
-  { label: "MMO", value: "mmo" },
-  { label: "MMOFPS", value: "mmofps" },
-  { label: "MMOTPS", value: "mmotps" },
-  { label: "3D", value: "3d" },
   { label: "2D", value: "2d" },
-  { label: "Anime", value: "anime" },
-  { label: "Fantasia", value: "fantasy" },
-  { label: "Sci-Fi", value: "sci-fi" },
-  { label: "Luta", value: "fighting" },
+  { label: "3D", value: "3d" },
   { label: "Action RPG", value: "action-rpg" },
   { label: "Ação", value: "action" },
-  { label: "Militar", value: "military" },
+  { label: "Anime", value: "anime" },
   { label: "Artes Marciais", value: "martial-arts" },
-  { label: "Voo", value: "flight" },
+  { label: "Battle Royale", value: "battle-royale" },
+  { label: "Cartas", value: "card" },
+  { label: "Corrida", value: "racing" },
+  { label: "Espaço", value: "space" },
+  { label: "Esportes", value: "sports" },
+  { label: "Estratégia", value: "strategy" },
+  { label: "Fantasia", value: "fantasy" },
   { label: "Low Spec", value: "low-spec" },
-  { label: "Tower Defense", value: "tower-defense" },
+  { label: "Luta", value: "fighting" },
+  { label: "Militar", value: "military" },
+  { label: "MMO", value: "mmo" },
+  { label: "MMOFPS", value: "mmofps" },
+  { label: "MMORPG", value: "mmorpg" },
+  { label: "MMORTS", value: "mmorts" },
+  { label: "MMOTPS", value: "mmotps" },
+  { label: "MOBA", value: "moba" },
+  { label: "Mundo Aberto", value: "open-world" },
+  { label: "Náutico", value: "sailing" },
+  { label: "Permadeath", value: "permadeath" },
+  { label: "Pixel", value: "pixel" },
+  { label: "Primeira Pessoa", value: "first-person" },
+  { label: "PvE", value: "pve" },
+  { label: "PvP", value: "pvp" },
+  { label: "Sandbox", value: "sandbox" },
+  { label: "Sci-Fi", value: "sci-fi" },
+  { label: "Side Scroller", value: "side-scroller" },
+  { label: "Social", value: "social" },
+  { label: "Sobrevivência", value: "survival" },
+  { label: "Super-herói", value: "superhero" },
+  { label: "Tanque", value: "tank" },
+  { label: "Terceira Pessoa", value: "third-person" },
   { label: "Terror", value: "horror" },
-  { label: "MMORTS", value: "mmorts" }
+  { label: "Tiro", value: "shooter" },
+  { label: "Topo", value: "top-down" },
+  { label: "Tower Defense", value: "tower-defense" },
+  { label: "Turnos", value: "turn-based" },
+  { label: "Voxel", value: "voxel" },
+  { label: "Voo", value: "flight" },
+  { label: "Zumbi", value: "zombie" }
 ];
 
 const platforms = [
@@ -105,17 +105,6 @@ export default function SearchForm() {
     setFormData({ ...formData, genres: [] });
     setErrorMessage(null);
   };
-  
-  const handleSelectAllPlatforms = () => {
-    setFormData({ ...formData, platforms: [...platforms] });
-    setErrorMessage(null);
-  };
-  
-  const handleDeselectAllPlatforms = () => {
-    setFormData({ ...formData, platforms: [] });
-    setErrorMessage(null);
-  };
-
   const { searchGame, isLoading } = useGameSearch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -159,9 +148,8 @@ export default function SearchForm() {
 
   return (
     <form onSubmit={handleSubmit} className={`mb-4 ${styles.searchForm}`}>
-      <div className="row g-1 g-lg-3">
-        <div className="col-12 mb-4">
-          <legend className="fs-4 px-3">GÊNERO</legend>
+      <div className="row g-1 g-lg-3 justify-content-between">
+        <div className="col-12 col-lg-9 mb-4">
           <div className={styles.searchForm__fieldsetContainer}>
             <div className={styles.searchForm__actionButtons}>
               <button 
@@ -179,7 +167,9 @@ export default function SearchForm() {
                 Limpar Seleção
               </button>
             </div>
-            <fieldset className="p-3 pe-2 pb-0">
+            <fieldset className="pe-2 pb-0">
+              <legend className="fs-4">GÊNERO</legend>
+
               <div className={`row g-3 ${styles.searchForm__checkboxGrid}`}>
                 {genres.map((genre) => (
                   <div key={genre.value} className="col-6 col-md-3">
@@ -202,26 +192,11 @@ export default function SearchForm() {
           </div>
         </div>
 
-        <div className="col-12 col-lg-7 mb-3">
-          <legend className="fs-4 px-3">Plataforma</legend>
+        <div className="col-12 col-lg-3 mb-3 align-item d-flex flex-column justify-content-between">
           <div className={styles.searchForm__fieldsetContainer}>
-            <div className={styles.searchForm__actionButtons}>
-              <button 
-                type="button" 
-                className={`${styles.searchForm__actionButton} ${styles['searchForm__actionButton--primary']}`}
-                onClick={handleSelectAllPlatforms}
-              >
-                Selecionar Todas
-              </button>
-              <button 
-                type="button" 
-                className={`${styles.searchForm__actionButton} ${styles['searchForm__actionButton--secondary']}`}
-                onClick={handleDeselectAllPlatforms}
-              >
-                Limpar Seleção
-              </button>
-            </div>
-            <fieldset className="p-3 p-md-4">
+            
+            <fieldset className="">
+              <legend className="fs-4">Plataforma</legend>
               <div className="d-flex flex-wrap gap-3">
                 {platforms.map((platform) => (
                   <div key={platform.value} className="flex-grow-1" style={{ maxWidth: '180px' }}>
@@ -242,11 +217,9 @@ export default function SearchForm() {
               </div>
             </fieldset>
           </div>  
-        </div>
 
-        <div className="col-12 col-lg-5 mb-3">
-          <legend className="fs-4 px-3">Memória RAM</legend>
-          <fieldset className="p-3 p-md-4">
+          <fieldset className="">
+            <legend className="fs-4 mt-4">Memória RAM</legend>
             <div className="form-group d-flex flex-column">
               <div className={`input-group ${styles.searchForm__inputGroup}`}>
                 <input
@@ -265,6 +238,9 @@ export default function SearchForm() {
               </div>
             </div>
           </fieldset>
+        </div>
+
+        <div className="col-12 col-lg-5 mb-3">
         </div>
 
         <div className="col-12">
